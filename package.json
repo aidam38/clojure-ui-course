@@ -1,0 +1,32 @@
+{
+  "name": "clojure-ui-course",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "shadow:watch": "shadow-cljs watch app",
+    "shadow:release": "shadow-cljs release app",
+    "postcss:build": "cross-env TAILWIND_MODE=build postcss styles/globals.css -o ./public/app.css --verbose",
+    "postcss:watch": "cross-env TAILWIND_MODE=watch postcss styles/globals.css -o ./public/app.css --verbose -w",
+    "postcss:release": "cross-env NODE_ENV=production postcss styles/globals.css -o ./public/app.css --verbose",
+    "dev": "run-p -l *:watch",
+    "release": "run-s *:release",
+    "install-runtime": "yum install -q java-1.8.0 && curl -O https://download.clojure.org/install/linux-install-1.10.3.1040.sh && chmod +x linux-install-1.10.3.1040.sh && ./linux-install-1.10.3.1040.sh",
+    "vercel-build": "run-s install-runtime release"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^5.0.12",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "tailwindcss": "^3.0.2"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "shadow-cljs": "^2.16.8"
+  }
+}

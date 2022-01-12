@@ -1,0 +1,10 @@
+{:deps     {:aliases [:dev]}
+ :nrepl    {:port 7002}
+ :dev-http {8020 "public"}
+ :builds   {:app {:target           :browser
+                  :asset-path       "js"
+                  :output-dir       "public/js"
+                  :compiler-options {:infer-externs :auto
+                                     :warnings      {:redef false}}
+                  :modules          {:main {:entries [clojure-ui-course.core]
+                                            :init-fn clojure-ui-course.core/init}}}}}
