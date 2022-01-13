@@ -1,5 +1,9 @@
 (ns clojure-ui-course.core
   (:require [reagent.dom :as rdom]
+            [re-frame.core :refer [dispatch]]
+            [clojure-ui-course.router :refer [init-routes!]]
+            [clojure-ui-course.events]
+            [clojure-ui-course.subs]
             [clojure-ui-course.views :refer [main]]))
 
 (defn mount-root []
@@ -10,4 +14,5 @@
   (mount-root))
 
 (defn ^:export init []
+  (init-routes!)
   (mount-root))

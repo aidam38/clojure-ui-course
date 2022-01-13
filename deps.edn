@@ -3,4 +3,6 @@
  :deps    {org.clojure/clojure       {:mvn/version "RELEASE"}
            org.clojure/clojurescript {:mvn/version "RELEASE"}
            thheller/shadow-cljs      {:mvn/version "2.16.5"}
-           reagent/reagent           {:mvn/version "1.1.0"}}}
+           reagent/reagent           {:mvn/version "1.1.0"}
+           re-frame/re-frame          {:mvn/version "1.2.0"}
+           metosin/reitit             {:mvn/version "0.5.15"}}}
