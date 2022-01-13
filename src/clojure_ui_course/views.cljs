@@ -21,21 +21,22 @@
     [:div "Welcome to the course sentence."]
     [:div.h-2]
     [c/h2 "Assignments"]
-    [:ul
+    [:ul.list-disc
      [:li
-      [:a
-       {:href (rtfe/href :assignment {:name "lab01"})}
-       "Lab01"]]
-     [:a
-      {:href (rtfe/href :assignment {:name "final-project"})}
-      "Final project"]]]])
+      [c/internal-link [:assignment {:name "lab01"}] "Lab01"]]
+     [:li
+      [c/internal-link [:assignment {:name "final-project"}] "Final project"]]]]])
 
 (defn assignment []
   (let [assignment @(subscribe [:assignment-name])]
     [wrapper
-     (case assignment
-       "lab01" [lab01/main]
-       "final-project" [final-project/main])]))
+     [:<>
+      [:button
+       {:on-click #(rtfe/push-state :index)}
+       "Back"]
+      (case assignment
+        "lab01" [lab01/main]
+        "final-project" [final-project/main])]]))
 
 (defn debug []
   (let [app-state @(subscribe [:app-state])]
