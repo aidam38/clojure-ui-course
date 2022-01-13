@@ -1,11 +1,25 @@
 (ns clojure-ui-course.shared.components
-  (:require [reitit.frontend.easy :as rtfe]))
+  (:require [reitit.frontend.easy :as rtfe]
+            [markdown-to-hiccup.core :as m]
+            [clojure-ui-course.util :as u]))
+
+(defn md [text]
+  (-> text m/md->hiccup m/component))
 
 (defn h1 [text]
-  [:h1.text-3xl text])
+  [:h1 text])
 
 (defn h2 [text]
-  [:h2.text-xl text])
+  [:h2 text])
+
+(defn h3 [text]
+  [:h3 text])
+
+(defn section [& children]
+  [:div (u/keyify-children children)])
+
+(defn p [text]
+  [:div (md text)])
 
 (defn internal-link [route label]
   [:a.text-blue-600.hover:text-blue-800.hover:underline
