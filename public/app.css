@@ -821,11 +821,21 @@ Ensure the default browser behavior of the `hidden` attribute.
 .relative {
   position: relative;
 }
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
 .top-0 {
   top: 0px;
 }
 .right-0 {
   right: 0px;
+}
+.left-1 {
+  left: 0.25rem;
+}
+.isolate {
+  isolation: isolate;
 }
 .mx-auto {
   margin-left: auto;
@@ -858,6 +868,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-2 {
   height: 0.5rem;
 }
+.h-96 {
+  height: 24rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -883,6 +896,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.rounded {
+  border-radius: 0.25rem;
 }
 .border {
   border-width: 1px;
@@ -911,6 +927,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .capitalize {
   text-transform: capitalize;
+}
+.italic {
+  font-style: italic;
 }
 *, ::before, ::after {
   --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
@@ -943,10 +962,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .underline {
   text-decoration: underline;
 }
+.line-through {
+  text-decoration: line-through;
+}
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.outline {
+  outline-style: solid;
 }
 .ring {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
@@ -955,6 +980,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .blur {
   --tw-blur: blur(8px);
+  filter: var(--tw-filter);
+}
+.invert {
+  --tw-invert: invert(100%);
   filter: var(--tw-filter);
 }
 .filter {

@@ -4,7 +4,7 @@
             [reitit.frontend.easy :as rtfe]
             [clojure-ui-course.shared.components :as c]
             [clojure-ui-course.util :as u]
-            [clojure-ui-course.assignments.lab01:as lab01]
+            [clojure-ui-course.assignments.lab01 :as lab01]
             [clojure-ui-course.assignments.final-project :as final-project]))
 
 (defn wrapper [& children]

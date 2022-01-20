@@ -1,5 +1,6 @@
 (ns clojure-ui-course.assignments.lab01
-  (:require [clojure-ui-course.shared.components :as c]))
+  (:require [clojure-ui-course.shared.components :as c]
+            [clojure-ui-course.shared.codemirror :refer [editor]]))
 
 (defn main []
   [:div
@@ -40,6 +41,8 @@ Follow these steps:
 Finally, clone the repository for this lab!
 [link](https://gitlab.caltech.edu/cs12-clojureui-22sp/lab01)
 
-## Part 1
-
+## Part 1")
+   [:div.border.rounded
+    [editor]]
+   (c/md "
 ## Part 2")])
