@@ -1,6 +1,22 @@
 (ns clojure-ui-course.assignments.lab01
-  (:require [clojure-ui-course.shared.components :as c]
-            [clojure-ui-course.shared.codemirror :refer [editor]]))
+  (:require [reagent.core :as r]
+            [clojure-ui-course.shared.components :as c]
+            [clojure-ui-course.shared.codemirror :refer [editor]]
+            [clojure-ui-course.shared.sci :as sci]))
+
+(defn game []
+  (r/with-let [*editor-string (r/atom "")
+               *result (r/track #(sci/render-string @*editor-string))]
+    [:div.flex.space-x-2
+     [:div.border.rounded
+      {:class "w-1/2"}
+      [editor
+       {:on-blur #(reset! *editor-string %)}]]
+     [:div
+      {:class "w-1/2"}
+      (if (fn? @*result)
+        [@*result]
+        (pr-str @*result))]]))
 
 (defn main []
   [:div
@@ -42,7 +58,6 @@ Finally, clone the repository for this lab!
 [link](https://gitlab.caltech.edu/cs12-clojureui-22sp/lab01)
 
 ## Part 1")
-   [:div.border.rounded
-    [editor]]
+   [game]
    (c/md "
 ## Part 2")])
