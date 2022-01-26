@@ -6,6 +6,10 @@
 (defn md [text]
   (-> text m/md->hiccup m/component))
 
+(defn my-md [text]
+  [:div.my-column
+   (md text)])
+
 (defn h1 [text]
   [:h1 text])
 

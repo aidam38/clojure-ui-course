@@ -7,3 +7,11 @@
         @apply list-decimal;
     }
 }
+@layer components {
+    .my-column {
+        @apply max-w-2xl w-full mx-auto;
+    }
+    .my-button {
+        @apply px-2 py-1 rounded shadow border border-gray-300;
+    }
+}

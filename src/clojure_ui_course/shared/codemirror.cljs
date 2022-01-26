@@ -19,7 +19,8 @@
 
 (defn editor [{:keys [on-change
                       on-blur
-                      read-only?]}]
+                      read-only?
+                      default-value]}]
   (r/with-let [extensions
                (js-concat
                 [(.. EditorView -lineWrapping)
@@ -46,7 +47,8 @@
                mount! (fn [el]
                         (when el
                           (let [editor-view (new EditorView
-                                                 #js{:state (.create EditorState #js {:extensions extensions})
+                                                 #js{:state (.create EditorState #js {:extensions extensions
+                                                       :doc        default-value})
                                                      :parent el})]
                             (reset! *editor-view editor-view))))]
     [:div (merge {:ref mount!}

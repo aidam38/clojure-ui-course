@@ -8,9 +8,8 @@
             [clojure-ui-course.assignments.final-project :as final-project]))
 
 (defn wrapper [& children]
-  [:div.bg-slate-50
-   [:div.max-w-2xl.w-full.mx-auto.px-4.sm:px-0.h-full.min-h-screen.prose
-    (u/keyify-children children)]])
+   [:div.bg-slate-50.px-4.sm:px-0.h-full.min-h-screen.prose.max-w-full
+    (u/keyify-children children)])
 
 (defn index []
   [wrapper
@@ -43,7 +42,7 @@
 
 (defn main []
   (let [route-name @(subscribe [:route-name])]
-    [:div
+    [:<>
      (case route-name
        :index [index]
        :assignment [assignment]

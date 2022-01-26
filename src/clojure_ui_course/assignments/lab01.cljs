@@ -4,23 +4,79 @@
             [clojure-ui-course.shared.codemirror :refer [editor]]
             [clojure-ui-course.shared.sci :as sci]))
 
-(defn game []
-  (r/with-let [*editor-string (r/atom "")
+(def program1 "(ns example
+  (:require [reagent.core :as r]))
+
+(def state (r/atom 0))
+
+(defn main []
+  [:button.my-button
+   {:on-click #(swap! state inc)}
+   \"Count \" @state])
+
+main")
+
+(def program2 "
+(ns example
+  (:require [reagent.core :as r]))
+
+(def state (r/atom {:x 0 :y 0}))
+
+(defn controls []
+  [:div.mx-auto
+   [:button 
+    {:on-click #(swap! state update :y inc)}
+    \"Up\"]])
+
+(defn board []
+  [:div.relative.w-96.h-96.bg-gray-50.border.rounded
+   [:div.position.bg-red-300
+    {:style {:left (* 20 (:x @state))
+             :bottom (* 20 (:y @state))}}
+    \"asdf\"]])
+(defn main []
+  [:div 
+   [controls]
+   [board]])
+
+main
+               ")
+
+(defn game1 []
+  (r/with-let [*editor-string (r/atom program1)
                *result (r/track #(sci/render-string @*editor-string))]
     [:div.flex.space-x-2
      [:div.border.rounded
       {:class "w-1/2"}
       [editor
-       {:on-blur #(reset! *editor-string %)}]]
+       {:on-blur #(reset! *editor-string %)
+        :default-value program1}]]
      [:div
       {:class "w-1/2"}
       (if (fn? @*result)
-        [@*result]
+        [:div.flex.justify-center.items-center.h-full
+         [@*result]]
+        (pr-str @*result))]]))
+
+(defn game2 []
+  (r/with-let [*editor-string (r/atom program1)
+               *result (r/track #(sci/render-string @*editor-string))]
+    [:div.flex.space-x-2
+     [:div.border.rounded
+      {:class "w-1/2"}
+      [editor
+       {:on-blur #(reset! *editor-string %)
+        :default-value program2}]]
+     [:div
+      {:class "w-1/2"}
+      (if (fn? @*result)
+        [:div.flex.justify-center.items-center.h-full
+         [@*result]]
         (pr-str @*result))]]))
 
 (defn main []
   [:div
-   (c/md "
+   (c/my-md "
 # Lab01: Basic Clojure
 
 _To Clojure, or to ClojureScript, that is the question._
@@ -57,7 +113,14 @@ Follow these steps:
 Finally, clone the repository for this lab!
 [link](https://gitlab.caltech.edu/cs12-clojureui-22sp/lab01)
 
-## Part 1")
-   [game]
-   (c/md "
+## Part 1
+
+### Example")
+   [:div.max-w-6xl.w-full.mx-auto
+    [game1]]
+   (c/my-md "
+### Challenge")
+   [:div.max-w-6xl.w-full.mx-auto
+    [game2]]
+   (c/my-md "
 ## Part 2")])
