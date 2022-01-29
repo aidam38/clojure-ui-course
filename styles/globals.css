@@ -9,9 +9,18 @@
 }
 @layer components {
     .my-column {
-        @apply max-w-2xl w-full mx-auto;
+        @apply max-w-3xl w-full mx-auto;
     }
     .my-button {
         @apply px-2 py-1 rounded shadow border border-gray-300;
+    }
+    .center-row {
+        @apply flex justify-center items-center
+    }
+    .center-col {
+        @apply flex flex-col justify-center items-center space-y-2
+    }
+    .player {
+        @apply w-5 h-5 flex justify-center items-center
     }
 }

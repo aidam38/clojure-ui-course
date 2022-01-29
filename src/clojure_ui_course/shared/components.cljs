@@ -1,5 +1,6 @@
 (ns clojure-ui-course.shared.components
-  (:require [reitit.frontend.easy :as rtfe]
+  (:require [reagent.core :as r]
+            [reitit.frontend.easy :as rtfe]
             [markdown-to-hiccup.core :as m]
             [clojure-ui-course.util :as u]))
 
@@ -34,3 +35,10 @@
   [:a.text-blue-600.hover:text-blue-800.hover:underline.visited:text-purple-600
    {:href url}
    label])
+
+(defn render-mixed [page]
+  (mapv #(if (string? %) (my-md %) %) page))
+
+#_(defn collapsible [title & children]
+  (r/with-let [open? (r/atom true)]
+              ))
