@@ -17,11 +17,11 @@
 
 (defn widget [{:keys [namespaces user-ns program]}]
   (r/with-let [*editor-string (r/atom program)
-               [ctx eval] (sci/init-evaluation namespaces)
-               _ (eval @*editor-string)
+               [ctx eval'] (sci/init-evaluation namespaces)
+               _ (eval' @*editor-string)
                *main    (get-in @(:env ctx) [:namespaces user-ns 'main])
                *state   (get-in @(:env ctx) [:namespaces user-ns 'state])]
-    (eval @*editor-string)
+    (eval' @*editor-string)
     [:div.flex.space-x-2.p-4.rounded.shadow.border
      [:div.border.rounded
       {:class "w-3/5"}

@@ -10,5 +10,5 @@
 
 (defn init-evaluation [namespaces]
   (let [ctx     (sci/init {:namespaces namespaces})
-        eval    (fn [source] (sci/eval-string* ctx source))]
-    [ctx eval]))
+        eval'    (fn [source] (sci/eval-string* ctx source))]
+    [ctx eval']))
