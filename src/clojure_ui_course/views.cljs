@@ -6,7 +6,7 @@
             [clojure-ui-course.util :as u]
             [clojure-ui-course.assignments.lab01.lab01 :as lab01]
             [clojure-ui-course.assignments.final-project.final-project :as final-project]
-            ["@heroicons/react/outline" :refer [UserGroupIcon ClockIcon ChatAlt2Icon]]))
+            ["@heroicons/react/outline" :refer [UserGroupIcon ClockIcon ChatAlt2Icon ArrowLeftIcon]]))
 
 (defn wrapper [& children]
   [:div.bg-slate-50.px-4.sm:px-0.h-full.min-h-screen.prose.max-w-full
@@ -108,9 +108,11 @@ Adam K.")
 (defn assignment []
   (let [assignment @(subscribe [:assignment-name])]
     [wrapper
-     [:button
-      {:on-click #(rtfe/push-state :index)}
-      "Back"]
+     [:div.h-2]
+     [:div.my-column
+      [:button.px-2.py-1.rounded.hover:bg-slate-200
+       {:on-click #(rtfe/push-state :index)}
+       [:span.flex.text-xs.text-slate-500 [icon ArrowLeftIcon] [:span.ml-1.uppercase "Back"]]]]
      (c/render-mixed
       (case assignment
         "lab01"  lab01/main

@@ -3,7 +3,6 @@
             [clojure-ui-course.shared.components :as c]
             [clojure-ui-course.shared.codemirror :refer [editor]]
             [clojure-ui-course.shared.sci :as sci]
-            [clojure-ui-course.setup.setup :as setup]
             [clojure-ui-course.util :as u])
   (:require-macros [clojure-ui-course.util :refer [slrp]]))
 
@@ -22,17 +21,17 @@
                *main    (get-in @(:env ctx) [:namespaces user-ns 'main])
                *state   (get-in @(:env ctx) [:namespaces user-ns 'state])]
     (eval' @*editor-string)
-    [:div.flex.space-x-2.p-4.rounded.shadow.border
-     [:div.border.rounded
+    [:div.flex.space-x-2.rounded.border.divide-x
+     [:div
       {:class "w-3/5"}
       [editor
        {:on-blur       #(reset! *editor-string %)
         :default-value program}]]
-     [:div.space-y-4
+     [:div.space-y-4.bg-slate-100
       {:class "w-2/5"}
-      [:div.flex.justify-end.not-prose
+      [:div.flex.justify-end.not-prose.text-slate-500
        [state-comp @*state]]
-      [:div.p-2.border.rounded.flex.justify-center
+      [:div.p-2.flex.justify-center
        [@*main]]]]))
 
 
@@ -120,7 +119,6 @@
      :user-ns 'game.student
      :program program2c}]
    (when @won? [:div.center-row "secret message!"])])
-
 
 (def main
   [:div
