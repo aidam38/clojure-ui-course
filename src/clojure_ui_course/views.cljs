@@ -13,18 +13,20 @@
 
 (defn index []
   [wrapper
-   [:div.h-2]
-   [c/h1 "UI Development in Clojure"]
-   [:div.text-lg.text-slate-400 "sp22"]
-   [:div.h-2]
-   [:div "Welcome to the course sentence."]
-   [:div.h-2]
-   [c/h2 "Assignments"]
-   [:ul.list-disc
+   [:div.my-column
+    [:div.h-2]
+    [c/h1 "UI Development in Clojure"]
+    [:div.text-lg.text-slate-400 "sp22"]
+    [:div.h-2]]
+   (c/my-md "Welcome to the course sentence.
+             
+## Assignments")
+   [:ul.list-disc.my-column
     [:li
      [c/internal-link [:assignment {:name "lab01"}] "Lab01"]]
     [:li
-     [c/internal-link [:assignment {:name "final-project"}] "Final project"]]]])
+     [c/internal-link [:assignment {:name "final-project"}] "Final project"]]]
+   (c/my-md "")])
 
 (defn assignment []
   (let [assignment @(subscribe [:assignment-name])]
