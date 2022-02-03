@@ -1,6 +1,7 @@
 (ns clojure-ui-course.shared.codemirror
   (:require [reagent.core :as r]
             [applied-science.js-interop :as j]
+            [clojure-ui-course.util :as u]
             ["@codemirror/commands" :refer [defaultKeymap indentWithTab]]
             ["@codemirror/state" :refer [EditorState]]
             ["@codemirror/view" :refer [EditorView keymap]]
@@ -48,7 +49,7 @@
                         (when el
                           (let [editor-view (new EditorView
                                                  #js{:state (.create EditorState #js {:extensions extensions
-                                                       :doc        default-value})
+                                                                                      :doc        default-value})
                                                      :parent el})]
                             (reset! *editor-view editor-view))))]
     [:div (merge {:ref mount!}

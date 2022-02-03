@@ -34,8 +34,10 @@
   (r/with-let [cached (.getItem js/localStorage ls-key)
                starting (if cached cached program)
                *editor-string (r/atom starting)
-               *error (r/atom false)]
-    ;;(eval' @*editor-string)
+               *error (r/atom false)
+               *update! (r/atom false)]
+    @*update!
+    (reset! *update! false)
     [:<>
      [:div.flex.space-x-2.rounded.border.divide-x
       [:div
@@ -52,16 +54,18 @@
                 :namespaces namespaces
                 :user-ns user-ns}]]]
      [:div.h-1]
-     [:div.flex.justify-end
+     [:div.flex.justify-end.text-slate-900
       [:> Popover {:class "relative"}
        [:> (.-Button Popover)
         [:button.px-2.py-1.rounded.hover:bg-slate-200.text-sm.uppercase {:on-click #()} "Reset"]]
-       [:> (.-Panel Popover) {:class "absolute z-10"}
-        [:div.overflow-hidden
-         [:div "Are you sure? This will overwrite your progress."]
-         [:button {:on-click #(do (reset! *editor-string program)
-                                  (.setItem js/localStorage ls-key program))}
-          "Yes, I'm sure."]]]]]]))
+       [:> (.-Panel Popover) {:class "absolute z-10 w-48 bottom-10 -right-12"}
+        [:div.overflow-hidden.rounded.shadow.border.bg-white.px-4.py-1.w-full
+         [:div "Are you sure?"]
+         [:div.flex.justify-end
+          [:button.px-2.py-1.rounded.bg-red-100.hover:bg-red-200.text-sm.uppercase {:on-click #(do (reset! *editor-string program)
+                                                                                                   (.setItem js/localStorage ls-key program)
+                                                                                                   (.. js/window -location reload))}
+           "Yes, I'm sure."]]]]]]]))
 
 
 (defn game1 []
