@@ -1,4 +1,4 @@
-(ns clojure-ui-course.assignments.lab01.lab01
+(ns clojure-ui-course.routes.assignments.lab01
   (:require [reagent.core :as r]
             [clojure-ui-course.shared.components :as c]
             [clojure-ui-course.shared.codemirror :refer [editor]]
@@ -6,9 +6,9 @@
             [clojure-ui-course.util :as u])
   (:require-macros [clojure-ui-course.util :refer [slrp]]))
 
-(def program1 (slrp "src/clojure_ui_course/assignments/lab01/game1.cljs"))
-(def program2 (slrp "src/clojure_ui_course/assignments/lab01/game2.cljs"))
-(def program2c (slrp "src/clojure_ui_course/assignments/lab01/game2c.cljs"))
+(def program1 (slrp  "resources/lab01/game1.cljs"))
+(def program2 (slrp  "resources/lab01/game2.cljs"))
+(def program2c (slrp "resources/lab01/game2c.cljs"))
 
 
 (defn state-comp [*state]

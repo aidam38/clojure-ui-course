@@ -39,6 +39,10 @@
 (defn render-mixed [page]
   (mapv #(if (string? %) (my-md %) %) page))
 
+(defn icon [El]
+  [:div.w-4.h-4.text-slate-500
+   [:> El]])
+
 #_(defn collapsible [title & children]
   (r/with-let [open? (r/atom true)]
               ))
