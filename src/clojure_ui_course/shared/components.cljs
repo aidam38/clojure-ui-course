@@ -78,5 +78,5 @@
     :reagent-render
     (fn [*error fallback child]
       (if @*error
-        fallback
+        [fallback @*error]
         child))}))

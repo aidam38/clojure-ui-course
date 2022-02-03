@@ -13,8 +13,10 @@
 (defn state-comp [*state]
   [:pre (str @*state)])
 
-(defn fallback []
-  [:div "didn't work!"])
+(defn fallback [e]
+  [:div.text-red-900
+   (.-message e)
+   [:div (str "Line: " (:line (.-data e)) ", Column: " (:column (.-data e)))]])
 
 (defn render [{:keys [editor-string namespaces user-ns]}]
   (let [[ctx eval'] (sci/init-evaluation namespaces)
@@ -30,7 +32,8 @@
 
 (defn widget [{:keys [namespaces user-ns program ls-key]}]
   (r/with-let [cached (.getItem js/localStorage ls-key)
-               *editor-string (r/atom (if cached cached program))
+               starting (if cached cached program)
+               *editor-string (r/atom starting)
                *error (r/atom false)]
     ;;(eval' @*editor-string)
     [:<>
@@ -41,10 +44,10 @@
         {:on-blur       #(do (reset! *error false)
                              (reset! *editor-string %)
                              (.setItem js/localStorage ls-key %))
-         :default-value program}]]
+         :default-value starting}]]
       [c/component-boundary
        *error
-       [fallback]
+       fallback
        [render {:editor-string @*editor-string
                 :namespaces namespaces
                 :user-ns user-ns}]]]
@@ -65,7 +68,7 @@
   [widget
    {:namespaces {'reagent.core (ns-publics 'reagent.core)}
     :user-ns 'example.core
-    :ls-key "lab01gam1"
+    :ls-key "lab01game1"
     :program program1}])
 
 (def game-info {:tile-size 20
