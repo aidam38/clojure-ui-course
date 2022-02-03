@@ -3,42 +3,69 @@
             [clojure-ui-course.shared.components :as c]
             [clojure-ui-course.shared.codemirror :refer [editor]]
             [clojure-ui-course.shared.sci :as sci]
-            [clojure-ui-course.util :as u])
+            [clojure-ui-course.util :as u]
+            ["@headlessui/react" :refer [Popover]])
   (:require-macros [clojure-ui-course.util :refer [slrp]]))
 
 (def program1 (slrp  "resources/lab01/game1.cljs"))
 (def program2 (slrp  "resources/lab01/game2.cljs"))
-(def program2c (slrp "resources/lab01/game2c.cljs"))
-
 
 (defn state-comp [*state]
   [:pre (str @*state)])
 
-(defn widget [{:keys [namespaces user-ns program]}]
-  (r/with-let [*editor-string (r/atom program)
-               [ctx eval'] (sci/init-evaluation namespaces)
-               _ (eval' @*editor-string)
-               *main    (get-in @(:env ctx) [:namespaces user-ns 'main])
-               *state   (get-in @(:env ctx) [:namespaces user-ns 'state])]
-    (eval' @*editor-string)
-    [:div.flex.space-x-2.rounded.border.divide-x
-     [:div
-      {:class "w-3/5"}
-      [editor
-       {:on-blur       #(reset! *editor-string %)
-        :default-value program}]]
-     [:div.space-y-4.bg-slate-100
-      {:class "w-2/5"}
-      [:div.flex.justify-end.not-prose.text-slate-500
-       [state-comp @*state]]
-      [:div.p-2.flex.justify-center
-       [@*main]]]]))
+(defn fallback []
+  [:div "didn't work!"])
+
+(defn render [{:keys [editor-string namespaces user-ns]}]
+  (let [[ctx eval'] (sci/init-evaluation namespaces)
+        _ (eval' editor-string)
+        *main    (get-in @(:env ctx) [:namespaces user-ns 'main])
+        *state   (get-in @(:env ctx) [:namespaces user-ns 'state])]
+    [:div.space-y-4.bg-slate-100
+     {:class "w-2/5"}
+     [:div.flex.justify-end.not-prose.text-slate-500
+      [state-comp @*state]]
+     [:div.p-2.flex.justify-center
+      [@*main]]]))
+
+(defn widget [{:keys [namespaces user-ns program ls-key]}]
+  (r/with-let [cached (.getItem js/localStorage ls-key)
+               *editor-string (r/atom (if cached cached program))
+               *error (r/atom false)]
+    ;;(eval' @*editor-string)
+    [:<>
+     [:div.flex.space-x-2.rounded.border.divide-x
+      [:div
+       {:class "w-3/5"}
+       [editor
+        {:on-blur       #(do (reset! *error false)
+                             (reset! *editor-string %)
+                             (.setItem js/localStorage ls-key %))
+         :default-value program}]]
+      [c/component-boundary
+       *error
+       [fallback]
+       [render {:editor-string @*editor-string
+                :namespaces namespaces
+                :user-ns user-ns}]]]
+     [:div.h-1]
+     [:div.flex.justify-end
+      [:> Popover {:class "relative"}
+       [:> (.-Button Popover)
+        [:button.px-2.py-1.rounded.hover:bg-slate-200.text-sm.uppercase {:on-click #()} "Reset"]]
+       [:> (.-Panel Popover) {:class "absolute z-10"}
+        [:div.overflow-hidden
+         [:div "Are you sure? This will overwrite your progress."]
+         [:button {:on-click #(do (reset! *editor-string program)
+                                  (.setItem js/localStorage ls-key program))}
+          "Yes, I'm sure."]]]]]]))
 
 
 (defn game1 []
   [widget
    {:namespaces {'reagent.core (ns-publics 'reagent.core)}
     :user-ns 'example.core
+    :ls-key "lab01gam1"
     :program program1}])
 
 (def game-info {:tile-size 20
@@ -106,18 +133,8 @@
                               'gamemap gamemap
                               'get-px px}}
      :user-ns 'game.student
+     :ls-key "lab01game2"
      :program program2}]
-   (when @won? [:div.center-row "secret message!"])])
-
-(defn game2c []
-  [:div
-   [widget
-    {:namespaces {'reagent.core (ns-publics 'reagent.core)
-                  'game.core {'valid-state? valid-state?
-                              'gamemap gamemap
-                              'get-px px}}
-     :user-ns 'game.student
-     :program program2c}]
    (when @won? [:div.center-row "secret message!"])])
 
 (def main
@@ -177,7 +194,7 @@ Because the browser tooling can get a bit complicated, we're going to start on o
 We're going to be using VS Code with the Calva extension, which provides everything we'll need (syntax highlighting, formatting, and the REPL).
 
 " [c/collapsible "## Setup"
-                 "### VS Code
+   "### VS Code
 
 Install VS Code [here](https://code.visualstudio.com/download) (_unless you already have it_). Then, install the **Calva: Clojure & ClojureScript Interactive Programming** extension (it might take a while).
 

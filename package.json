@@ -36,6 +36,7 @@
     "@codemirror/state": "^0.19.6",
     "@codemirror/stream-parser": "^0.19.4",
     "@codemirror/view": "^0.19.40",
+    "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
     "cross-env": "^7.0.3",
     "react": "^17.0.2",

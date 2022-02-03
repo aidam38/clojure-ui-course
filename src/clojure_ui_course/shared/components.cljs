@@ -59,9 +59,24 @@
       [:button {:on-click #(swap! open? not)}
        [:h2.p-1.mr-1.rounded.hover:bg-slate-200
         [:div.w-5.h-5
-        (if @open?
-          [:> ChevronDownIcon]
-          [:> ChevronRightIcon])]]]
+         (if @open?
+           [:> ChevronDownIcon]
+           [:> ChevronRightIcon])]]]
       (md title)]
      (when @open?
        (map #(if (string? %) (md %) %) children))]))
+
+
+(defn component-boundary
+  "Wraps a component in an error boundary. Can pass in a map with fallback-view. If the fallback-view is a fn, then it will recieve the error as the first argument"
+  [*error _ _]
+  (r/create-class
+   {:get-derived-state-from-error
+    (fn [e]
+      (reset! *error e)
+      #js {})
+    :reagent-render
+    (fn [*error fallback child]
+      (if @*error
+        fallback
+        child))}))
