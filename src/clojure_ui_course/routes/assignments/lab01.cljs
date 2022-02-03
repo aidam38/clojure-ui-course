@@ -122,48 +122,62 @@
 
 (def main
   [:div
-   "# Lab01: \"Win the Game\" and Basic Clojure
+   "# Lab01: Win the Game and Basic Clojure
 
 This lab has two parts:
-* Part 1 will give you a taste of how UI development in Clojure looks like,
-* Part 2 will start getting you comfortable in Clojure (though that's a long path).
+* Part A will give you a taste of how UI development in Clojure looks like,
+* Part B will start getting you comfortable in Clojure (though that's a long path).
     
-*You may do the parts in any order*. 
+*You may do the parts in any order*. If you get stuck on Part A, just do Part B and then return.
     
-Part 1 has no setup and is completely in the browser! Part 2 requires you to set up VSCode with a Clojure REPL.
+Part A has no setup and is completely in the browser! Part B requires you to set up VSCode with a Clojure REPL.
 
-## Part 1
+## Part A
 
 In this part of the lab, you will first read a simple Clojure program that renders a button with a counter, and then try to fix up an unfinished game where you have to reach the goal by moving the player. 
     
-The code in this part contains a lot of things you have no chance of understanding yet, and all these parenthesees may just leave you dazed and confused. This is partly the intention (by the end of this course, you will understand everything in this code and more), partly a tradeoff to make the first lab cool and exciting. 
+The code in this part contains a lot of things you'll probably not be able to understand yet, and all these parenthesees may make you dazed and confused. This is partly the intention, partly a tradeoff to make the first lab cool and exciting. By the end of this course, you will understand everything in this code and more.
     
-We recommend you treat this part as a *linguistics exercise* – try to infer as much as you can from the code, and copy and paste all the parts that do similar things.
+We recommend that you treat this part as a *linguistics exercise* – try to infer as much as you can from the code, and copy and paste all the parts that do similar things."
 
-### Example"
-   [:div.max-w-7xl.w-full.mx-auto
+   "### UI \"Hello World\"
+
+Below, you can see one of the most basic piece of UI – a simple button which increments a counter. Try it!
+
+ "
+   [:div.max-w-6xl.w-full.mx-auto
     [game1]]
-   "### Challenge"
-   [:div.max-w-7xl.w-full.mx-auto
+   "Except for the CSS class `my-button`, nothing is hidden from you. Don't worry about the first form starting with `(ns ...`, it's just declaring the namespace and importing `reagent`, which is a cljs wrapper around React you will learn about more later in the course."
+   [c/task 0 "Try changing `inc` to `dec` and see what happens. This should give you a feel how the editing works. If you see any errors not caused by you, please report them. "]
+   "### Win the Game!
+_You have suddenly found yourself in the middle of a game. Unfortunately, the controls are broken, oh no! Fix the controls and win the game._
+    "
+   [:div.max-w-6xl.w-full.mx-auto
     [game2]]
-   "### Challenge solution"
-   [:div.max-w-7xl.w-full.mx-auto
-    [game2c]]
+   "Here, a good chunk of the game is actually hidden from you. These functions are implemented elsewhere:
+* `valid-state?` checks whether the next state isn't in a wall or whether you've won,
+* `gamemap` is the background/environment component,
+* `get-px` takes in an x or y coordinate and returns the corresponding pixel position on the board.
 
-   "## Part 2
-    
-_This part is still very much unfinished and I haven't worked on it much since..._
 
+There are two main places you will need to make edits at, marked [1] and [2]. Here are some hints for them: 
+1. You will definitely need the [case](https://clojuredocs.org/clojure.core/case) form. You may use the keywords `:up`, `:left`, `:down`, and `:right` as a way to represent `dir`ection.
+2. You may want to split your controls into two `div`s, one for the up button, and one for the left, down, and right buttons. (the syntax would be: `[:div.center-row [:button...]]`). Passing arguments to functions works like this in Clojure `(move-player! :up)`."
+
+
+   [c/task 1 "Move the player to the yellow block in the center to win the game. **After you win the game, you will receive a secret code**, which you will submit along with your Part B submission later."]
+
+   "## Part B  
 _To Clojure, or to ClojureScript, that is the question._
 
 Clojure compiles to JVM (Java Virtual Machine) bytecode, ClojureScript compiles to JavaScript. In this course, we're going to be using exclusively ClojureScript (cljs), either in `node.js` (local JavaScript runtime) or in the browser.
 
-Because the browser tooling can get a bit complicated, we're going to start on our local machines, using `node.js`. The best way to use cljs with `node.js` for small projects is `nbb`, a small fast cljs compiler. Once installed, typing `nbb` to the terminal will spawn a cljs console similar to typing `python`.
+Because the browser tooling can get a bit complicated, we're going to start on our local machines, using `node.js`. The best way to use cljs with `node.js` for small projects is `nbb`, a small fast cljs interpreter. It works similarly to the `python` command line interface.
 
 We're going to be using VS Code with the Calva extension, which provides everything we'll need (syntax highlighting, formatting, and the REPL).
 
-## Setup
-### VS Code
+" [c/collapsible "## Setup"
+                 "### VS Code
 
 Install VS Code [here](https://code.visualstudio.com/download) (_unless you already have it_). Then, install the **Calva: Clojure & ClojureScript Interactive Programming** extension (it might take a while).
 
@@ -185,7 +199,9 @@ Follow these steps:
 2. Open the file located at `~/.ssh/id_rsa.pub` and copy the contents.
 3. Go here [https://gitlab.caltech.edu/-/profile/keys](https://gitlab.caltech.edu/-/profile/keys) (sign in if necessary) and paste into the big text box labeled 'Key'.
 4. Give your key some title and don't fill out the expiration.
-5. Click 'Add key'
+5. Click 'Add key'"]
+
+   "## The REPL
 
 Finally, clone the repository for this lab!
 [link](https://gitlab.caltech.edu/cs12-clojureui-22sp/lab01)

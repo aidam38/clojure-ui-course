@@ -10,6 +10,7 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 }
+
 @layer components {
   .my-column {
     @apply max-w-4xl w-full mx-auto;

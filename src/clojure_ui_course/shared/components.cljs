@@ -2,7 +2,8 @@
   (:require [reagent.core :as r]
             [reitit.frontend.easy :as rtfe]
             [markdown-to-hiccup.core :as m]
-            [clojure-ui-course.util :as u]))
+            [clojure-ui-course.util :as u]
+            ["@heroicons/react/outline" :refer [PencilAltIcon ChevronRightIcon ChevronDownIcon]]))
 
 (defn md [text]
   (-> text m/md->hiccup m/component))
@@ -43,6 +44,24 @@
   [:div.w-4.h-4.text-slate-500
    [:> El]])
 
-#_(defn collapsible [title & children]
+(defn task [i text]
+  [:div.py-2.px-4.bg-sky-100.rounded.border.border-sky-200.text-sky-900.my-column
+   [:div.flex.items-center.space-x-1
+    [:div.w-5.h-5
+     [:> PencilAltIcon]]
+    [:span.font-semibold (str "Task " i ".")]]
+   (md text)])
+
+(defn collapsible [title & children]
   (r/with-let [open? (r/atom true)]
-              ))
+    [:div.my-column
+     [:div.flex.items-center.-translate-x-8
+      [:button {:on-click #(swap! open? not)}
+       [:h2.p-1.mr-1.rounded.hover:bg-slate-200
+        [:div.w-5.h-5
+        (if @open?
+          [:> ChevronDownIcon]
+          [:> ChevronRightIcon])]]]
+      (md title)]
+     (when @open?
+       (map #(if (string? %) (md %) %) children))]))

@@ -9,4 +9,4 @@
 
 (defn main []
   [:button.my-button {:on-click #(inc-counter!)} 
-   "Count " (:count @state)])
+   "Count " (get @state :count)])

@@ -10,7 +10,7 @@
             ["@heroicons/react/outline" :refer [ArrowLeftIcon]]))
 
 (defn wrapper [& children]
-  [:div.bg-slate-50.px-4.sm:px-0.h-full.min-h-screen.prose.max-w-full
+  [:div.bg-slate-50.px-4.sm:px-0.h-full.min-h-screen.prose.max-w-full.pb-96
    (u/keyify-children children)])
 
 (defn assignment []
